@@ -127,7 +127,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="TPI,KBase,">
 
 
 
@@ -141,13 +141,14 @@
 
 
 <meta name="description" content="这是一个依赖性很强（坑爹）的产品，数据库用的是知网自主研发的kbase全文检索数据库，然后衍生出一个全家桶，包括内容管理器，服务器管理，电子书加工工具，元数据编目工具，CAJ阅读器，数据转换工具，数据查询工具等。 平台框架为.NET Framework4，后台UI框架是ASP.NET MVC4，数据库KBase 数据库设计内容管理器新建设计好的库信息，必须设定库代码命名规则比如这次以ZTB打头：Z">
+<meta name="keywords" content="TPI,KBase">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TPI（tongfang profession information）个性化开发">
 <meta property="og:url" content="http://chengz.fun/2018/12/05/TPI-个性化开发/index.html">
 <meta property="og:site_name" content="Chengz&#39;s Blog">
 <meta property="og:description" content="这是一个依赖性很强（坑爹）的产品，数据库用的是知网自主研发的kbase全文检索数据库，然后衍生出一个全家桶，包括内容管理器，服务器管理，电子书加工工具，元数据编目工具，CAJ阅读器，数据转换工具，数据查询工具等。 平台框架为.NET Framework4，后台UI框架是ASP.NET MVC4，数据库KBase 数据库设计内容管理器新建设计好的库信息，必须设定库代码命名规则比如这次以ZTB打头：Z">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-05T03:29:07.101Z">
+<meta property="og:updated_time" content="2018-12-06T09:28:19.611Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TPI（tongfang profession information）个性化开发">
 <meta name="twitter:description" content="这是一个依赖性很强（坑爹）的产品，数据库用的是知网自主研发的kbase全文检索数据库，然后衍生出一个全家桶，包括内容管理器，服务器管理，电子书加工工具，元数据编目工具，CAJ阅读器，数据转换工具，数据查询工具等。 平台框架为.NET Framework4，后台UI框架是ASP.NET MVC4，数据库KBase 数据库设计内容管理器新建设计好的库信息，必须设定库代码命名规则比如这次以ZTB打头：Z">
@@ -363,6 +364,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/同方知网/" itemprop="url" rel="index">
+                    <span itemprop="name">同方知网</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -441,9 +464,41 @@
         <p>这是一个依赖性很强（坑爹）的产品，数据库用的是知网自主研发的kbase全文检索数据库，然后衍生出一个全家桶，包括内容管理器，服务器管理，电子书加工工具，元数据编目工具，CAJ阅读器，数据转换工具，数据查询工具等。</p>
 <p>平台框架为.NET Framework4，后台UI框架是ASP.NET MVC4，数据库KBase</p>
 <h2 id="数据库设计"><a href="#数据库设计" class="headerlink" title="数据库设计"></a>数据库设计</h2><p>内容管理器新建设计好的库信息，必须设定库代码命名规则比如这次以ZTB打头：ZTBPARTYSCHOOL、ZTBETD等。</p>
-<h2 id="业务逻辑层代码修改"><a href="#业务逻辑层代码修改" class="headerlink" title="业务逻辑层代码修改"></a>业务逻辑层代码修改</h2><p>登录界面后台，将刚刚新建的库发布出去</p>
-<h3 id="首页"><a href="#首页" class="headerlink" title="首页"></a>首页</h3><p>1.数据库列表</p>
-
+<h2 id="业务逻辑层代码修改"><a href="#业务逻辑层代码修改" class="headerlink" title="业务逻辑层代码修改"></a>业务逻辑层代码修改</h2><p>登录界面后台，将刚刚新建的库发布出去。我KBase用的TPI6.5，而业务代码用的7.0，所以单库发布勾选字段点击下一步后出错</p>
+<pre><code>    2018-12-06 09:49:14,536 ERROR - KNet.Data.KBaseClient.KBaseException: KBaseException: { 服务器执行SQL语句出错, 错误码: -1109 }
+   在 KNet.Data.KBaseClient.KBaseCommand.ExecuteNonQuery()
+   在 KNet.Data.Entity.KBase.KBaseDataProvider.Insert[T](T model, String tableName)
+   在 KNet.Data.Entity.DataContext.Insert[T](T model, String tableName)
+   在 Castle.Proxies.Invocations.IDataContext_Insert.InvokeMethodOnTarget()
+   在 Castle.DynamicProxy.AbstractInvocation.Proceed()
+   在 Castle.Proxies.IDataContextProxy.Insert[T](T model, String tableName, String ctxName)
+   在 CNKI.TPI.Web.Admin.DAO.SingleDBPublishDAO.InsertPublicField(SYS_CMS_DATABASE_PUBLISH_FIELD obj) 位置 E:\CNKI\CNKI.TPI.Web_20181107\CNKI.TPI.Web.Admin.DAO\SingleDBPublishDAO.cs:行号 212
+2018-12-06 09:49:15,017 ERROR - 表SYS_CMS_DATABASE_PUBLISH_FIELD插入数据失败：FieldType:1
+</code></pre><p>kbase需要升级到7.0，或者执行一下代码：</p>
+<pre><code>alter table SYS_CMS_DATABASE add ISUNICODE INTEGER(10) NORMAL
+alter table SYS_CMS_DATABASE add SEARCHTYPE INTEGER(8) NORMAL
+alter table DBUSField add FieldType INTEGER(10) NORMAL
+alter table DBUSField add DataType VCHAR(32) NORMAL
+alter table DBUSField add FieldID INTEGER(10) NORMAL
+alter table DBUSField add SortNo INTEGER(10) NORMAL
+alter table DBUSField add Width INTEGER(10) NORMAL
+alter table DBUSField add SortType INTEGER(10) NORMAL
+alter table SYS_CMS_NEWS_NEWSCONTENTCONFIG add Location INTEGER(10) NORMAL
+alter table SYS_CMS_NEWS_JUMPTEMPLATE add Location INTEGER(10) NORMAL
+alter table SYS_CMS_NEWS_NEWSCONTENTCONFIG add SORTNO INTEGER(10) NORMAL
+alter table SYS_CMS_DATABASE_PUBLISH_FIELD add ISHIDDEN INTEGER(10) NORMAL
+alter table DBUSFIELD add ISHIDDEN INTEGER(10) NORMAL
+alter table SYS_CMS_SUBMIT add FieldType INTEGER(10) NORMAL
+alter table DBUSFIELD add DICFIELDNAME VCHAR(255) ASCII INDEX CHAR NORMAL DISPLAYNAME 字典名称
+alter table SYS_CMS_DATABASE_PUBLISH_FIELD add FIELDDICNAME VCHAR(255) ASCII INDEX CHAR NORMAL DISPLAYNAME 字典名称
+alter table SPORTSIAAF_METADATA add SYS_FLD_COMMENTRATE INTEGER(10) ASCII INDEX INTEGER NORMAL DISPLAYNAME 评论数量
+</code></pre><h3 id="首页"><a href="#首页" class="headerlink" title="首页"></a>首页</h3><p>1.数据库列表过滤SingleDBPublishDAO.cs GetDBList方法里添加</p>
+<pre><code>result = result.Where(b =&gt; b.DatabaseCode.StartsWith(&quot;ZTB&quot;)).ToList();
+</code></pre><h3 id="数字资源"><a href="#数字资源" class="headerlink" title="数字资源"></a>数字资源</h3><p>1.SingleDBPublishDAO.cs与CategoryDAO.cs的GetPublishDBList与GetDatabaseCLSDBType方法里添加一下过滤条件</p>
+<pre><code>result= result.Where(b =&gt; b.DatabaseCode.StartsWith(&quot;ZTB&quot;)).ToList();
+</code></pre><h3 id="首页检索条分类里的库"><a href="#首页检索条分类里的库" class="headerlink" title="首页检索条分类里的库"></a>首页检索条分类里的库</h3><p>1.UserDBDAO.cs 的GetUnionDB方法里添加</p>
+<pre><code>result = result.Where(b =&gt; b.DbCode.StartsWith(&quot;ZTB&quot;)).ToList();
+</code></pre>
       
     </div>
     
@@ -457,6 +512,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/TPI/" rel="tag"><i class="fa fa-tag"></i> TPI</a>
+          
+            <a href="/tags/KBase/" rel="tag"><i class="fa fa-tag"></i> KBase</a>
+          
+        </div>
       
 
       
@@ -559,14 +622,32 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
@@ -649,7 +730,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库设计"><span class="nav-number">1.</span> <span class="nav-text">数据库设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#业务逻辑层代码修改"><span class="nav-number">2.</span> <span class="nav-text">业务逻辑层代码修改</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#首页"><span class="nav-number">2.1.</span> <span class="nav-text">首页</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库设计"><span class="nav-number">1.</span> <span class="nav-text">数据库设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#业务逻辑层代码修改"><span class="nav-number">2.</span> <span class="nav-text">业务逻辑层代码修改</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#首页"><span class="nav-number">2.1.</span> <span class="nav-text">首页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字资源"><span class="nav-number">2.2.</span> <span class="nav-text">数字资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#首页检索条分类里的库"><span class="nav-number">2.3.</span> <span class="nav-text">首页检索条分类里的库</span></a></li></ol></li></ol></div>
             
 
           </div>
