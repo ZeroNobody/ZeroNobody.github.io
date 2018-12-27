@@ -148,7 +148,7 @@
 <meta property="og:site_name" content="Chengz&#39;s Blog">
 <meta property="og:description" content="这是一个依赖性很强（坑爹）的产品，数据库用的是知网自主研发的kbase全文检索数据库，然后衍生出一个全家桶，包括内容管理器，服务器管理，电子书加工工具，元数据编目工具，CAJ阅读器，数据转换工具，数据查询工具等。 平台框架为.NET Framework4，后台UI框架是ASP.NET MVC4，数据库KBase 数据库设计内容管理器新建设计好的库信息，必须设定库代码命名规则比如这次以ZTB打头：Z">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-06T09:28:19.611Z">
+<meta property="og:updated_time" content="2018-12-07T09:27:29.431Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TPI（tongfang profession information）个性化开发">
 <meta name="twitter:description" content="这是一个依赖性很强（坑爹）的产品，数据库用的是知网自主研发的kbase全文检索数据库，然后衍生出一个全家桶，包括内容管理器，服务器管理，电子书加工工具，元数据编目工具，CAJ阅读器，数据转换工具，数据查询工具等。 平台框架为.NET Framework4，后台UI框架是ASP.NET MVC4，数据库KBase 数据库设计内容管理器新建设计好的库信息，必须设定库代码命名规则比如这次以ZTB打头：Z">
@@ -496,8 +496,11 @@ alter table SPORTSIAAF_METADATA add SYS_FLD_COMMENTRATE INTEGER(10) ASCII INDEX 
 <pre><code>result = result.Where(b =&gt; b.DatabaseCode.StartsWith(&quot;ZTB&quot;)).ToList();
 </code></pre><h3 id="数字资源"><a href="#数字资源" class="headerlink" title="数字资源"></a>数字资源</h3><p>1.SingleDBPublishDAO.cs与CategoryDAO.cs的GetPublishDBList与GetDatabaseCLSDBType方法里添加一下过滤条件</p>
 <pre><code>result= result.Where(b =&gt; b.DatabaseCode.StartsWith(&quot;ZTB&quot;)).ToList();
-</code></pre><h3 id="首页检索条分类里的库"><a href="#首页检索条分类里的库" class="headerlink" title="首页检索条分类里的库"></a>首页检索条分类里的库</h3><p>1.UserDBDAO.cs 的GetUnionDB方法里添加</p>
+</code></pre><h3 id="首页检索条分类里的库"><a href="#首页检索条分类里的库" class="headerlink" title="首页检索条分类里的库"></a>首页检索条分类里的库</h3><p>1.UserDBDAO.cs的GetUnionDB方法里添加</p>
 <pre><code>result = result.Where(b =&gt; b.DbCode.StartsWith(&quot;ZTB&quot;)).ToList();
+</code></pre><h3 id="在线提交"><a href="#在线提交" class="headerlink" title="在线提交"></a>在线提交</h3><p>1.UserDBDAO.cs的GetSubmitDBList方法里添加</p>
+<pre><code>result = result.Where(b =&gt; b.DbCode.StartsWith(&quot;ZTB&quot;)).ToList();
+</code></pre><h3 id="通过上面的添加的代码，可以看出个性化定制需要将DAO层里的大部分方法进行过滤，在这里我挖了个坑，就是在分页的时候没办法先过滤再分页，一般用户拥有的库数量不超过50个，而定制的一般不超过10个，所以"><a href="#通过上面的添加的代码，可以看出个性化定制需要将DAO层里的大部分方法进行过滤，在这里我挖了个坑，就是在分页的时候没办法先过滤再分页，一般用户拥有的库数量不超过50个，而定制的一般不超过10个，所以" class="headerlink" title="通过上面的添加的代码，可以看出个性化定制需要将DAO层里的大部分方法进行过滤，在这里我挖了个坑，就是在分页的时候没办法先过滤再分页，一般用户拥有的库数量不超过50个，而定制的一般不超过10个，所以"></a>通过上面的添加的代码，可以看出个性化定制需要将DAO层里的大部分方法进行过滤，在这里我挖了个坑，就是在分页的时候没办法先过滤再分页，一般用户拥有的库数量不超过50个，而定制的一般不超过10个，所以</h3><pre><code>IList&lt;SYS_CMS_DATABASE&gt; result= Context.Get&lt;SYS_CMS_DATABASE&gt;(exp.Compile(), pageIndex, 50, out count);
 </code></pre>
       
     </div>
@@ -539,6 +542,10 @@ alter table SPORTSIAAF_METADATA add SYS_FLD_COMMENTRATE INTEGER(10) ASCII INDEX 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/20/新文档/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -622,7 +629,7 @@ alter table SPORTSIAAF_METADATA add SYS_FLD_COMMENTRATE INTEGER(10) ASCII INDEX 
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -633,7 +640,7 @@ alter table SPORTSIAAF_METADATA add SYS_FLD_COMMENTRATE INTEGER(10) ASCII INDEX 
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -644,7 +651,7 @@ alter table SPORTSIAAF_METADATA add SYS_FLD_COMMENTRATE INTEGER(10) ASCII INDEX 
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -730,7 +737,7 @@ alter table SPORTSIAAF_METADATA add SYS_FLD_COMMENTRATE INTEGER(10) ASCII INDEX 
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库设计"><span class="nav-number">1.</span> <span class="nav-text">数据库设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#业务逻辑层代码修改"><span class="nav-number">2.</span> <span class="nav-text">业务逻辑层代码修改</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#首页"><span class="nav-number">2.1.</span> <span class="nav-text">首页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字资源"><span class="nav-number">2.2.</span> <span class="nav-text">数字资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#首页检索条分类里的库"><span class="nav-number">2.3.</span> <span class="nav-text">首页检索条分类里的库</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库设计"><span class="nav-number">1.</span> <span class="nav-text">数据库设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#业务逻辑层代码修改"><span class="nav-number">2.</span> <span class="nav-text">业务逻辑层代码修改</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#首页"><span class="nav-number">2.1.</span> <span class="nav-text">首页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字资源"><span class="nav-number">2.2.</span> <span class="nav-text">数字资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#首页检索条分类里的库"><span class="nav-number">2.3.</span> <span class="nav-text">首页检索条分类里的库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在线提交"><span class="nav-number">2.4.</span> <span class="nav-text">在线提交</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过上面的添加的代码，可以看出个性化定制需要将DAO层里的大部分方法进行过滤，在这里我挖了个坑，就是在分页的时候没办法先过滤再分页，一般用户拥有的库数量不超过50个，而定制的一般不超过10个，所以"><span class="nav-number">2.5.</span> <span class="nav-text">通过上面的添加的代码，可以看出个性化定制需要将DAO层里的大部分方法进行过滤，在这里我挖了个坑，就是在分页的时候没办法先过滤再分页，一般用户拥有的库数量不超过50个，而定制的一般不超过10个，所以</span></a></li></ol></li></ol></div>
             
 
           </div>

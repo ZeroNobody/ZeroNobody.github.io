@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://chengz.fun/"/>
-  <updated>2018-12-06T09:28:19.611Z</updated>
+  <updated>2018-12-25T02:41:19.342Z</updated>
   <id>http://chengz.fun/</id>
   
   <author>
@@ -17,13 +17,85 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>List使用add方法添加数据时的覆盖问题</title>
+    <link href="http://chengz.fun/2018/12/25/List%E4%BD%BF%E7%94%A8add%E6%96%B9%E6%B3%95%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE%E6%97%B6%E7%9A%84%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98/"/>
+    <id>http://chengz.fun/2018/12/25/List使用add方法添加数据时的覆盖问题/</id>
+    <published>2018-12-25T02:38:55.000Z</published>
+    <updated>2018-12-25T02:41:19.342Z</updated>
+    
+    <content type="html"><![CDATA[<p>有时候我们用对象封装数据后添加到list链表中会发现，最后添加的那个对象覆盖了前面所有的数据，虽然数据的总数（list.size()）和实际情况一样，但是数据却不是我们想要的</p><p>例如下面：</p><pre><code> ResultSet rs = stmt.executeQuery(&quot;select * from &quot; + tableName);List&lt;ImsData&gt; dataList = new ArrayList&lt;ImsData&gt;();ImsData imsData = new ImsData();while(rs.next()){              imsData.setBenchmarkCmName(rs.getString(1));    imsData.setMeasureCmName(rs.getString(2));    dataList.add(imsData);}</code></pre><p>很明显，代码的目的是将数据库中查寻的数据封装到dataList中并返回，可实际上，这段代码将返回查询数据的最后一条数据，并且数据量的总数和数据库（select count(*) from tableName）数据量一样,这是为什么呢，因为在循环开始前，我们新建了一个imsData对象，在后面封装数据的时候，我们每次都使用的是同一个对象，所以每次都是对这个对象的操作，这就导致了每添加一个数据的时候，前一个对象的数据也就被重新设置了，所以就发生了所谓的对象数据覆盖。</p><p>要解决这一问题也很简单，那就是每次循环的时候新建一个对象，这样每次添加进入list集合的都是一个新对象，也就不会覆盖原对象的值了</p><pre><code>  ResultSet rs = stmt.executeQuery(&quot;select * from &quot; + tableName);List&lt;ImsData&gt; imsDataList = new ArrayList&lt;ImsData&gt;();while(rs.next()){    ImsData imsData = new ImsData();    imsData.setBenchmarkCmName(rs.getString(1));    imsData.setMeasureCmName(rs.getString(2));    imsDataList.add(imsData);}</code></pre><p>问题解决</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;有时候我们用对象封装数据后添加到list链表中会发现，最后添加的那个对象覆盖了前面所有的数据，虽然数据的总数（list.size()）和实际情况一样，但是数据却不是我们想要的&lt;/p&gt;
+&lt;p&gt;例如下面：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; ResultSet rs = stmt.
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>终于动笔了</title>
+    <link href="http://chengz.fun/2018/12/23/%E7%BB%88%E4%BA%8E%E5%8A%A8%E7%AC%94%E4%BA%86/"/>
+    <id>http://chengz.fun/2018/12/23/终于动笔了/</id>
+    <published>2018-12-23T07:13:30.000Z</published>
+    <updated>2018-12-23T07:45:11.890Z</updated>
+    
+    <content type="html"><![CDATA[<p>之前断断续续的写过一些杂谈啊，技术啊，大部分是一些资源分享啦。中途总有人跳出来说我这些东西早就过时，很low之类的，这就让我本就战战兢兢的心态直接跌到谷底了。哎，<code>从未见过如此厚颜无耻之徒</code>这是我对自己的评价。纠结了很久，终于决定—那我就无耻到底吧，毕竟每天混迹于<a href="https://github.com/" target="_blank" rel="noopener">全球最大同性交友网站</a>，<strong>分享</strong>—这才是我自己啊！</p><p>为什么我如此执着于做分享呢？一个技术马马虎虎，各领域都几乎是小白，又不善于交流沟通，性格怪癖…当你听到有这样的一个人要分享他的一些感想，一些拙劣的工具等等的时候，你肯定会跳起来谴责他，轻蔑，嘲笑他。</p><p>However，</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;之前断断续续的写过一些杂谈啊，技术啊，大部分是一些资源分享啦。中途总有人跳出来说我这些东西早就过时，很low之类的，这就让我本就战战兢兢的心态直接跌到谷底了。哎，&lt;code&gt;从未见过如此厚颜无耻之徒&lt;/code&gt;这是我对自己的评价。纠结了很久，终于决定—那我就无耻到底吧，毕
+      
+    
+    </summary>
+    
+      <category term="感想" scheme="http://chengz.fun/categories/%E6%84%9F%E6%83%B3/"/>
+    
+    
+      <category term="动机" scheme="http://chengz.fun/tags/%E5%8A%A8%E6%9C%BA/"/>
+    
+      <category term="开始" scheme="http://chengz.fun/tags/%E5%BC%80%E5%A7%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://chengz.fun/2018/12/20/%E6%96%B0%E6%96%87%E6%A1%A3/"/>
+    <id>http://chengz.fun/2018/12/20/新文档/</id>
+    <published>2018-12-20T05:55:54.736Z</published>
+    <updated>2018-12-20T05:55:54.854Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="今年主体班"><a href="#今年主体班" class="headerlink" title="今年主体班"></a>今年主体班</h1><p>标题 mainclass<br>详情 各个库（_METADATA）</p><h1 id="每年主体班-（链接）"><a href="#每年主体班-（链接）" class="headerlink" title="每年主体班  （链接）"></a>每年主体班  （链接）</h1><p>跳转到主体班列表</p><p>列表根据    <code>检索条件</code> 跳转到检索页面</p><h1 id="重要理论"><a href="#重要理论" class="headerlink" title="重要理论"></a>重要理论</h1><p>标题  为1978年的主体班</p><p>详情  各个库（_METADATA）</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;今年主体班&quot;&gt;&lt;a href=&quot;#今年主体班&quot; class=&quot;headerlink&quot; title=&quot;今年主体班&quot;&gt;&lt;/a&gt;今年主体班&lt;/h1&gt;&lt;p&gt;标题 mainclass&lt;br&gt;详情 各个库（_METADATA）&lt;/p&gt;
+&lt;h1 id=&quot;每年主体班-（链接）&quot;&gt;
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>TPI（tongfang profession information）个性化开发</title>
     <link href="http://chengz.fun/2018/12/05/TPI-%E4%B8%AA%E6%80%A7%E5%8C%96%E5%BC%80%E5%8F%91/"/>
     <id>http://chengz.fun/2018/12/05/TPI-个性化开发/</id>
     <published>2018-12-05T01:39:17.000Z</published>
-    <updated>2018-12-06T09:28:19.611Z</updated>
+    <updated>2018-12-07T09:27:29.431Z</updated>
     
-    <content type="html"><![CDATA[<p>这是一个依赖性很强（坑爹）的产品，数据库用的是知网自主研发的kbase全文检索数据库，然后衍生出一个全家桶，包括内容管理器，服务器管理，电子书加工工具，元数据编目工具，CAJ阅读器，数据转换工具，数据查询工具等。</p><p>平台框架为.NET Framework4，后台UI框架是ASP.NET MVC4，数据库KBase</p><h2 id="数据库设计"><a href="#数据库设计" class="headerlink" title="数据库设计"></a>数据库设计</h2><p>内容管理器新建设计好的库信息，必须设定库代码命名规则比如这次以ZTB打头：ZTBPARTYSCHOOL、ZTBETD等。</p><h2 id="业务逻辑层代码修改"><a href="#业务逻辑层代码修改" class="headerlink" title="业务逻辑层代码修改"></a>业务逻辑层代码修改</h2><p>登录界面后台，将刚刚新建的库发布出去。我KBase用的TPI6.5，而业务代码用的7.0，所以单库发布勾选字段点击下一步后出错</p><pre><code>    2018-12-06 09:49:14,536 ERROR - KNet.Data.KBaseClient.KBaseException: KBaseException: { 服务器执行SQL语句出错, 错误码: -1109 }   在 KNet.Data.KBaseClient.KBaseCommand.ExecuteNonQuery()   在 KNet.Data.Entity.KBase.KBaseDataProvider.Insert[T](T model, String tableName)   在 KNet.Data.Entity.DataContext.Insert[T](T model, String tableName)   在 Castle.Proxies.Invocations.IDataContext_Insert.InvokeMethodOnTarget()   在 Castle.DynamicProxy.AbstractInvocation.Proceed()   在 Castle.Proxies.IDataContextProxy.Insert[T](T model, String tableName, String ctxName)   在 CNKI.TPI.Web.Admin.DAO.SingleDBPublishDAO.InsertPublicField(SYS_CMS_DATABASE_PUBLISH_FIELD obj) 位置 E:\CNKI\CNKI.TPI.Web_20181107\CNKI.TPI.Web.Admin.DAO\SingleDBPublishDAO.cs:行号 2122018-12-06 09:49:15,017 ERROR - 表SYS_CMS_DATABASE_PUBLISH_FIELD插入数据失败：FieldType:1</code></pre><p>kbase需要升级到7.0，或者执行一下代码：</p><pre><code>alter table SYS_CMS_DATABASE add ISUNICODE INTEGER(10) NORMALalter table SYS_CMS_DATABASE add SEARCHTYPE INTEGER(8) NORMALalter table DBUSField add FieldType INTEGER(10) NORMALalter table DBUSField add DataType VCHAR(32) NORMALalter table DBUSField add FieldID INTEGER(10) NORMALalter table DBUSField add SortNo INTEGER(10) NORMALalter table DBUSField add Width INTEGER(10) NORMALalter table DBUSField add SortType INTEGER(10) NORMALalter table SYS_CMS_NEWS_NEWSCONTENTCONFIG add Location INTEGER(10) NORMALalter table SYS_CMS_NEWS_JUMPTEMPLATE add Location INTEGER(10) NORMALalter table SYS_CMS_NEWS_NEWSCONTENTCONFIG add SORTNO INTEGER(10) NORMALalter table SYS_CMS_DATABASE_PUBLISH_FIELD add ISHIDDEN INTEGER(10) NORMALalter table DBUSFIELD add ISHIDDEN INTEGER(10) NORMALalter table SYS_CMS_SUBMIT add FieldType INTEGER(10) NORMALalter table DBUSFIELD add DICFIELDNAME VCHAR(255) ASCII INDEX CHAR NORMAL DISPLAYNAME 字典名称alter table SYS_CMS_DATABASE_PUBLISH_FIELD add FIELDDICNAME VCHAR(255) ASCII INDEX CHAR NORMAL DISPLAYNAME 字典名称alter table SPORTSIAAF_METADATA add SYS_FLD_COMMENTRATE INTEGER(10) ASCII INDEX INTEGER NORMAL DISPLAYNAME 评论数量</code></pre><h3 id="首页"><a href="#首页" class="headerlink" title="首页"></a>首页</h3><p>1.数据库列表过滤SingleDBPublishDAO.cs GetDBList方法里添加</p><pre><code>result = result.Where(b =&gt; b.DatabaseCode.StartsWith(&quot;ZTB&quot;)).ToList();</code></pre><h3 id="数字资源"><a href="#数字资源" class="headerlink" title="数字资源"></a>数字资源</h3><p>1.SingleDBPublishDAO.cs与CategoryDAO.cs的GetPublishDBList与GetDatabaseCLSDBType方法里添加一下过滤条件</p><pre><code>result= result.Where(b =&gt; b.DatabaseCode.StartsWith(&quot;ZTB&quot;)).ToList();</code></pre><h3 id="首页检索条分类里的库"><a href="#首页检索条分类里的库" class="headerlink" title="首页检索条分类里的库"></a>首页检索条分类里的库</h3><p>1.UserDBDAO.cs 的GetUnionDB方法里添加</p><pre><code>result = result.Where(b =&gt; b.DbCode.StartsWith(&quot;ZTB&quot;)).ToList();</code></pre>]]></content>
+    <content type="html"><![CDATA[<p>这是一个依赖性很强（坑爹）的产品，数据库用的是知网自主研发的kbase全文检索数据库，然后衍生出一个全家桶，包括内容管理器，服务器管理，电子书加工工具，元数据编目工具，CAJ阅读器，数据转换工具，数据查询工具等。</p><p>平台框架为.NET Framework4，后台UI框架是ASP.NET MVC4，数据库KBase</p><h2 id="数据库设计"><a href="#数据库设计" class="headerlink" title="数据库设计"></a>数据库设计</h2><p>内容管理器新建设计好的库信息，必须设定库代码命名规则比如这次以ZTB打头：ZTBPARTYSCHOOL、ZTBETD等。</p><h2 id="业务逻辑层代码修改"><a href="#业务逻辑层代码修改" class="headerlink" title="业务逻辑层代码修改"></a>业务逻辑层代码修改</h2><p>登录界面后台，将刚刚新建的库发布出去。我KBase用的TPI6.5，而业务代码用的7.0，所以单库发布勾选字段点击下一步后出错</p><pre><code>    2018-12-06 09:49:14,536 ERROR - KNet.Data.KBaseClient.KBaseException: KBaseException: { 服务器执行SQL语句出错, 错误码: -1109 }   在 KNet.Data.KBaseClient.KBaseCommand.ExecuteNonQuery()   在 KNet.Data.Entity.KBase.KBaseDataProvider.Insert[T](T model, String tableName)   在 KNet.Data.Entity.DataContext.Insert[T](T model, String tableName)   在 Castle.Proxies.Invocations.IDataContext_Insert.InvokeMethodOnTarget()   在 Castle.DynamicProxy.AbstractInvocation.Proceed()   在 Castle.Proxies.IDataContextProxy.Insert[T](T model, String tableName, String ctxName)   在 CNKI.TPI.Web.Admin.DAO.SingleDBPublishDAO.InsertPublicField(SYS_CMS_DATABASE_PUBLISH_FIELD obj) 位置 E:\CNKI\CNKI.TPI.Web_20181107\CNKI.TPI.Web.Admin.DAO\SingleDBPublishDAO.cs:行号 2122018-12-06 09:49:15,017 ERROR - 表SYS_CMS_DATABASE_PUBLISH_FIELD插入数据失败：FieldType:1</code></pre><p>kbase需要升级到7.0，或者执行一下代码：</p><pre><code>alter table SYS_CMS_DATABASE add ISUNICODE INTEGER(10) NORMALalter table SYS_CMS_DATABASE add SEARCHTYPE INTEGER(8) NORMALalter table DBUSField add FieldType INTEGER(10) NORMALalter table DBUSField add DataType VCHAR(32) NORMALalter table DBUSField add FieldID INTEGER(10) NORMALalter table DBUSField add SortNo INTEGER(10) NORMALalter table DBUSField add Width INTEGER(10) NORMALalter table DBUSField add SortType INTEGER(10) NORMALalter table SYS_CMS_NEWS_NEWSCONTENTCONFIG add Location INTEGER(10) NORMALalter table SYS_CMS_NEWS_JUMPTEMPLATE add Location INTEGER(10) NORMALalter table SYS_CMS_NEWS_NEWSCONTENTCONFIG add SORTNO INTEGER(10) NORMALalter table SYS_CMS_DATABASE_PUBLISH_FIELD add ISHIDDEN INTEGER(10) NORMALalter table DBUSFIELD add ISHIDDEN INTEGER(10) NORMALalter table SYS_CMS_SUBMIT add FieldType INTEGER(10) NORMALalter table DBUSFIELD add DICFIELDNAME VCHAR(255) ASCII INDEX CHAR NORMAL DISPLAYNAME 字典名称alter table SYS_CMS_DATABASE_PUBLISH_FIELD add FIELDDICNAME VCHAR(255) ASCII INDEX CHAR NORMAL DISPLAYNAME 字典名称alter table SPORTSIAAF_METADATA add SYS_FLD_COMMENTRATE INTEGER(10) ASCII INDEX INTEGER NORMAL DISPLAYNAME 评论数量</code></pre><h3 id="首页"><a href="#首页" class="headerlink" title="首页"></a>首页</h3><p>1.数据库列表过滤SingleDBPublishDAO.cs GetDBList方法里添加</p><pre><code>result = result.Where(b =&gt; b.DatabaseCode.StartsWith(&quot;ZTB&quot;)).ToList();</code></pre><h3 id="数字资源"><a href="#数字资源" class="headerlink" title="数字资源"></a>数字资源</h3><p>1.SingleDBPublishDAO.cs与CategoryDAO.cs的GetPublishDBList与GetDatabaseCLSDBType方法里添加一下过滤条件</p><pre><code>result= result.Where(b =&gt; b.DatabaseCode.StartsWith(&quot;ZTB&quot;)).ToList();</code></pre><h3 id="首页检索条分类里的库"><a href="#首页检索条分类里的库" class="headerlink" title="首页检索条分类里的库"></a>首页检索条分类里的库</h3><p>1.UserDBDAO.cs的GetUnionDB方法里添加</p><pre><code>result = result.Where(b =&gt; b.DbCode.StartsWith(&quot;ZTB&quot;)).ToList();</code></pre><h3 id="在线提交"><a href="#在线提交" class="headerlink" title="在线提交"></a>在线提交</h3><p>1.UserDBDAO.cs的GetSubmitDBList方法里添加</p><pre><code>result = result.Where(b =&gt; b.DbCode.StartsWith(&quot;ZTB&quot;)).ToList();</code></pre><h3 id="通过上面的添加的代码，可以看出个性化定制需要将DAO层里的大部分方法进行过滤，在这里我挖了个坑，就是在分页的时候没办法先过滤再分页，一般用户拥有的库数量不超过50个，而定制的一般不超过10个，所以"><a href="#通过上面的添加的代码，可以看出个性化定制需要将DAO层里的大部分方法进行过滤，在这里我挖了个坑，就是在分页的时候没办法先过滤再分页，一般用户拥有的库数量不超过50个，而定制的一般不超过10个，所以" class="headerlink" title="通过上面的添加的代码，可以看出个性化定制需要将DAO层里的大部分方法进行过滤，在这里我挖了个坑，就是在分页的时候没办法先过滤再分页，一般用户拥有的库数量不超过50个，而定制的一般不超过10个，所以"></a>通过上面的添加的代码，可以看出个性化定制需要将DAO层里的大部分方法进行过滤，在这里我挖了个坑，就是在分页的时候没办法先过滤再分页，一般用户拥有的库数量不超过50个，而定制的一般不超过10个，所以</h3><pre><code>IList&lt;SYS_CMS_DATABASE&gt; result= Context.Get&lt;SYS_CMS_DATABASE&gt;(exp.Compile(), pageIndex, 50, out count);</code></pre>]]></content>
     
     <summary type="html">
     
@@ -84,7 +156,7 @@
     <link href="http://chengz.fun/2018/12/03/2018-12-03-BaiduPCS/"/>
     <id>http://chengz.fun/2018/12/03/2018-12-03-BaiduPCS/</id>
     <published>2018-12-03T08:05:24.000Z</published>
-    <updated>2018-12-06T02:38:11.250Z</updated>
+    <updated>2018-12-27T08:00:04.544Z</updated>
     
     <content type="html"><![CDATA[<h1 id="直接进入主题"><a href="#直接进入主题" class="headerlink" title="直接进入主题"></a>直接进入主题</h1><h2 id="百度网盘不限速下载-支持Windows和Mac"><a href="#百度网盘不限速下载-支持Windows和Mac" class="headerlink" title="百度网盘不限速下载 支持Windows和Mac"></a>百度网盘不限速下载 支持Windows和Mac</h2><pre><code>https://github.com/high-speed-downloader/high-speed-downloader</code></pre><h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><blockquote><blockquote><p>安装高速下载器客户端和浏览器插件,打开百度网盘点击高速下载即可</p></blockquote></blockquote><h2 id="百度网盘客户端-Go语言编写"><a href="#百度网盘客户端-Go语言编写" class="headerlink" title="百度网盘客户端 - Go语言编写"></a>百度网盘客户端 - Go语言编写</h2><pre><code>https://github.com/ZeroNobody/BaiduPCS-Go# 设置保存目录, 保存到 D:\Downloads# 注意区别反斜杠 &quot;\&quot; 和 斜杠 &quot;/&quot; !!!BaiduPCS-Go config set -savedir D:/Downloads# 下载 /我的资源/1.mp4BaiduPCS-Go d /我的资源/1.mp4# 下载 /我的资源 整个目录!!BaiduPCS-Go d /我的资源# 下载网盘内的全部文件!!BaiduPCS-Go d /BaiduPCS-Go d *# 将本地的 C:\Users\Administrator\Desktop\1.mp4 上传到网盘 /视频 目录# 注意区别反斜杠 &quot;\&quot; 和 斜杠 &quot;/&quot; !!!BaiduPCS-Go upload C:/Users/Administrator/Desktop/1.mp4 /视频# 将本地的 C:\Users\Administrator\Desktop\1.mp4 和 C:\Users\Administrator\Desktop\2.mp4 上传到网盘 /视频 目录BaiduPCS-Go upload C:/Users/Administrator/Desktop/1.mp4 C:/Users/Administrator/Desktop/2.mp4 /视频# 将本地的 C:\Users\Administrator\Desktop 整个目录上传到网盘 /视频 目录BaiduPCS-Go upload C:/Users/Administrator/Desktop /视频</code></pre>]]></content>
     
@@ -97,6 +169,12 @@
     
     </summary>
     
+      <category term="tools" scheme="http://chengz.fun/categories/tools/"/>
+    
+    
+      <category term="百度网盘" scheme="http://chengz.fun/tags/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98/"/>
+    
+      <category term="tools" scheme="http://chengz.fun/tags/tools/"/>
     
   </entry>
   
